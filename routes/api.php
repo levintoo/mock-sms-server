@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/test', function () {
-    return response()->json(['message' => 'Test successful']);
-});
+Route::resource('/message', MessageController::class)
+    ->only(['index', 'store', 'show', 'destroy']);;
