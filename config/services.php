@@ -36,6 +36,6 @@ return [
     ],
 
     'sms' => [
-        'webhook' => 'http://127.0.0.1:8000/api/webhook',
+        'webhook' => env('SMS_WEBHOOK', 'http://127.0.0.1:8000/api/webhook'),
     ]
 ];
