@@ -2,8 +2,6 @@
 
 A mock SMS gateway built with Laravel to simulates sending and delivering SMS messages with status updates and webhook notifications — for local and staging environments.
 
----
-
 ## 🚀 Features
 
 - 📤 Simulate message sending (single or bulk)
@@ -13,10 +11,6 @@ A mock SMS gateway built with Laravel to simulates sending and delivering SMS me
 - 🔐 Simple Bearer token authentication (`test-key`)
 - 🧪 Supports JSON and form-data requests
 - ⏳ Intelligent webhook polling (up to 24 hours)
-
----
-
-
 
 ## 📦 Installation
 
@@ -53,8 +47,6 @@ Start a queue worker
 php artisan queue:work --tries=3 --backoff=3
 ````
 
----
-
 ## 🔐 Authentication
 
 Use a fixed Bearer token for all requests:
@@ -62,8 +54,6 @@ Use a fixed Bearer token for all requests:
 ```
 Authorization: Bearer test-key
 ```
-
----
 
 ## 📤 Sending Messages
 
@@ -77,7 +67,7 @@ POST /api/message
 
 #### ✅ JSON (application/json)
 
-```json
+```js
 {
   "to": "254700123123", // or ["254700123123", "254711456789"] for queued bulk
   "message": "Hello world!"
@@ -86,7 +76,7 @@ POST /api/message
 
 #### ✅ Form-Data (multipart/form-data)
 
-```json
+```js
 to: "254700123123",
 // or for queued bulk
 // to[] = 254700123123
@@ -101,8 +91,6 @@ message = "Hello world!"
 | `to`      | string or array | International phone number(s), required |
 | `message` | string          | Message body, required                  |
 
----
-
 ## 📬 Message Status Lifecycle
 
 Messages transition through the following statuses:
@@ -116,8 +104,6 @@ enum MessageStatus: string {
 }
 ```
 
----
-
 ## 📡 Webhook Configuration
 
 Set your webhook URL in `.env`:
@@ -128,7 +114,7 @@ SMS_WEBHOOK=https://your-app.test/webhook
 
 ### Webhook Payload
 
-```json
+```js
 {
     'event' => ...,
     'data' => [
@@ -136,8 +122,6 @@ SMS_WEBHOOK=https://your-app.test/webhook
     ],
 }
 ```
-
----
 
 ## 🔁 Webhook Retry Strategy
 
@@ -149,8 +133,6 @@ SMS_WEBHOOK=https://your-app.test/webhook
 
 Polling stops once a `200 OK` response is received.
 
----
-
 ## 🧵 Job Classes
 
 | Job Class                | Description                                  |
@@ -158,5 +140,3 @@ Polling stops once a `200 OK` response is received.
 | `MockMessageSendJob`     | Simulates transition to `sent`               |
 | `MockMessageDeliveryJob` | Simulates transition to `delivered`/`failed` |
 | `PollDeliveryWebhookJob` | Polls the webhook URL                        |
-
----
