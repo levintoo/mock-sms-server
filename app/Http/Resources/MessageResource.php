@@ -17,6 +17,7 @@ class MessageResource extends JsonResource
             'message' => $this->message,
             'status' => $this->status,
             'delivered_at' => $this->delivered_at,
+            'sent_at' => $this->sent_at,
             'failed_at' => $this->failed_at,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

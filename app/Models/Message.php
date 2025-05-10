@@ -15,11 +15,13 @@ class Message extends Model
         'to',
         'message',
         'status',
+        'sent_at',
         'delivered_at',
         'failed_at',
     ];
 
     protected $casts = [
+        'sent_at' => 'datetime',
         'delivered_at' => 'datetime',
         'failed_at' => 'datetime',
         'status' => MessageStatus::class,

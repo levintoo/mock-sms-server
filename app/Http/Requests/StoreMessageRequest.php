@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Enums\MessageStatus;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 
 class StoreMessageRequest extends FormRequest
@@ -24,7 +25,20 @@ class StoreMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'to' => ['required'],
+            'to' => [
+                'required',
+                Rule::when(
+                    fn ($input) => is_array($input['to'] ?? null),
+                    ['array', 'min:1'],
+                    ['string', 'regex:/^\d{10,15}$/']
+                ),
+            ],
+            'to.*' => [
+                Rule::when(
+                    fn ($input) => is_array($input['to'] ?? null),
+                    ['string', 'regex:/^\d{10,15}$/']
+                ),
+            ],
             'message' => ['nullable'],
             'status' => ['nullable', new enum(MessageStatus::class)],
             'delivered_at' => ['nullable', 'date'],
